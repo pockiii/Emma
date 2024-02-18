@@ -1,15 +1,13 @@
 /**
  * @format
  */
-
-import 'react-native';
+import 'react-native'
+import HomeScreen from '../pages/HomeScreen';
+import ProfileScreen from '../pages/ProfileScreen';
 import React from 'react';
 import App from '../App';
-
-// Note: import explicitly to use the types shipped with jest.
-import {it} from '@jest/globals';
-
-// Note: test renderer must be required after react-native.
+import { describe, it, expect, test } from '@jest/globals';
+import { render } from '@testing-library/react';
 import renderer from 'react-test-renderer';
 
 it('renders correctly', () => {

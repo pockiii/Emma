@@ -5,114 +5,70 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  Image,
   useColorScheme,
   View,
+  Pressable,
+  FlatList,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import HomeScreen from './pages/HomeScreen.jsx';
+import ProfileScreen from './pages/ProfileScreen.jsx';
+import Constants from './styles/variables.jsx';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+function BottomBar({ navigation }) {
+  return(
+    <View style={{flex: 1, position: 'absolute', zIndex: 10, elevation: (Platform.OS === 'android') ? 50 : 0, bottom: 0, left: 0, right: 0, width: '100%'}}>
+      <View style={{backgroundColor: Constants.BLUE(), width: '90%', marginVertical: 20, marginHorizontal: '5%', borderRadius: 100, justifyContent: 'center', flexDirection: 'row'}}>
+        <Image source={require('./assets/home.png')} style={{width: 24, height: 24, margin: 16}}/>
+        <Image source={require('./assets/grid.png')} style={{width: 24, height: 24, margin: 16}}/>
+        <Image source={require('./assets/wallet.png')} style={{width: 24, height: 24, margin: 16}}/>
+      </View>
+    </View>
+  )
+}
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const Stack = createNativeStackNavigator();
+
+function App() {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={{flex: 1}}>
+      <BottomBar/>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ animation: 'none' }}>
+          <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }}/>
+        </Stack.Navigator>
+      </NavigationContainer>
     </View>
   );
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  background: {
+    backgroundColor: 'white'
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  bold: {
+    fontWeight: "700",
+    color: "black"
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  semibold: {
+    fontWeight: "500",
+    color: "black"
   },
-  highlight: {
-    fontWeight: '700',
-  },
+  regular: {
+    fontWeight: "400",
+    color: "black"
+  }
 });
 
 export default App;
