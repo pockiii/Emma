@@ -18,7 +18,10 @@ npm run ios
 ```
 
 ## Testing 
-tbd
+Testing currently not working
+```
+node --experimental-vm-modules node_modules/jest/bin/jest.js    
+```
 
 ## Notes
 Tried my best to make all elements modular, may have ran out of time to clean up some code.
